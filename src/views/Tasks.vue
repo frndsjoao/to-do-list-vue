@@ -2,7 +2,6 @@
   <div class="tasklist">
     <v-col
       cols="12"
-      sm="6"
     >
       <v-text-field
         v-model="input"
@@ -18,7 +17,7 @@
         <v-list-item-group>
           
           <div 
-            v-for="task, index in tasks" 
+            v-for="task, index in $store.state.tasks" 
             :key="index"
           >
             <Task :task="task" />
@@ -38,25 +37,12 @@ import Task from '../components/tasks/Task.vue'
     data() {
       return {
         input: null,
-        tasks: [
-          { title: 'Estudar Vue', status: false },
-          { title: 'Commitar o To-do', status: false },
-          { title: 'Estudar React', status: false },
-        ]
       }
     },
     methods: {
       handleAddTask() {
-        if(this.input) {
-          this.tasks.push({
-            title: this.input,
-            status: false
-          })
-        }
+        this.$store.commit('handleAddTask', this.input)
         this.input = null
-      },
-      handleRemoveTask() {
-        // this.tasks = this.tasks.splice(index, 1)
       }
     }
   }
